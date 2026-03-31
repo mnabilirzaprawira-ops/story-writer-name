@@ -2,154 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Name Vault — Ultra Light | Nabil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Name Vault | Pro Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-deep: #050507;
-            --card-bg: #12121a;
-            --border-glow: rgba(255, 189, 89, 0.15);
-            --gold: #ffbd59;
-            --text-main: #f8fafc;
-            --text-muted: #8b9bb4;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
-        
-        body {
-            background-color: var(--bg-deep);
-            /* Gradient background halus penggganti blur cair (Sangat ringan di GPU HP) */
-            background-image: radial-gradient(circle at top right, #1a1a2e 0%, transparent 60%),
-                              radial-gradient(circle at bottom left, #2a111a 0%, transparent 60%);
-            color: var(--text-main);
-            display: flex; justify-content: center; min-height: 100vh; padding: 20px;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .container {
-            width: 100%; max-width: 650px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 24px; padding: 35px 25px; margin-top: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-        }
-
-        h1 { text-align: center; color: var(--gold); font-size: 2.5rem; margin-bottom: 25px; font-weight: 800; }
-        
-        .profile-section {
-            background: #0a0a0f; border-radius: 16px; padding: 20px; margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .profile-title { color: var(--gold); font-size: 0.85rem; letter-spacing: 3px; font-weight: 800; margin-bottom: 10px; }
-        .subtitle { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
-        
-        .btn-group { display: flex; flex-direction: column; gap: 12px; }
-        .btn {
-            background: #0a0a0f; color: #fff; border: 1px solid rgba(255,255,255,0.05);
-            padding: 16px; font-size: 1rem; font-weight: 600; border-radius: 12px;
-            cursor: pointer; transition: 0.2s;
-        }
-        .btn:active { transform: scale(0.98); }
-        .btn-gold { border-color: var(--border-glow); color: var(--gold); }
-
-        .section { display: none; animation: fadeIn 0.3s ease-out; }
-        .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .back-btn { background: transparent; border: none; color: var(--text-muted); font-weight: 600; cursor: pointer; }
-        
-        .search-input {
-            width: 100%; padding: 15px; background: #0a0a0f; border: 1px solid var(--border-glow);
-            border-radius: 12px; color: #fff; font-size: 1rem; margin-bottom: 15px; outline: none;
-        }
-
-        .list-container {
-            max-height: 50vh; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
-            -webkit-overflow-scrolling: touch; /* Mulus di HP */
-        }
-        .name-item {
-            background: #0a0a0f; border: 1px solid rgba(255,255,255,0.03); border-radius: 12px;
-            padding: 15px; display: flex; justify-content: space-between; align-items: center;
-        }
-        .vote-btn {
-            background: rgba(255, 189, 89, 0.1); color: var(--gold); border: none;
-            padding: 8px 12px; border-radius: 8px; font-weight: 800; cursor: pointer;
-        }
-
-        .timer-card { background: #0a0a0f; padding: 15px; border-radius: 12px; margin-top: 15px; }
-        .progress-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 8px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--gold); width: 0%; transition: width 1s linear; }
-
-        #toast {
-            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
-            background: var(--gold); color: #000; font-weight: 800; padding: 12px 24px;
-            border-radius: 30px; transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 1000;
-        }
-        #toast.show { bottom: 30px; }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="preload.js"></script> 
 </head>
 <body>
 
+    <div id="preloader">
+        <div class="loader-circle"></div>
+        <h3 style="color: var(--gold); margin-top: 15px; letter-spacing: 2px;">SYNCING VAULT...</h3>
+    </div>
+
+    <div class="bg-liquid">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
     <div id="toast">Message</div>
 
-    <div class="container">
+    <div class="container" id="app-container" style="opacity: 0; transition: opacity 0.8s ease;">
+        
         <div id="menu-section" class="section active">
             <h1>The Name Vault</h1>
             <div class="profile-section">
-                <div class="profile-title">SYSTEM ARCHITECTURE</div>
-                <p class="subtitle">Arsip identitas unik, otentik, dan high-aesthetic. <br><br> Curator: <span style="color:#fff;font-weight:800;" id="secret-trigger">@n4bilirzap.ip</span></p>
+                <div class="profile-title">System Architecture & Lore</div>
+                <p class="subtitle">
+                    Welcome to the central archive of pure, authentic, and high-aesthetic names. Quality over quantity.
+                </p>
+                <div class="author-info">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Curator: <span style="color: #fff; font-weight:800">Nabil Irza Prawira</span></p>
+                    <a id="secret-trigger" class="instagram-link" onclick="handleSecretClick(event)">@n4bilirzap.ip</a>
+                </div>
             </div>
+            
             <div class="btn-group">
-                <button class="btn" onclick="window.switchTab('all-names-section')">Daftar Semua Nama</button>
-                <button class="btn" onclick="window.switchTab('top-names-section')">Top Nama Terbaik</button>
-                <button class="btn btn-gold" onclick="window.switchTab('add-name-section')">Publish / Tambah Nama</button>
+                <button class="btn" onclick="showSection('all-names-section')"><span>Daftar Semua Nama</span></button>
+                <button class="btn" onclick="showSection('top-names-section')"><span>Top Nama Terbaik</span></button>
+                <button class="btn" style="border-color: rgba(255, 189, 89, 0.3);" onclick="showSection('add-name-section')">
+                    <span style="color: var(--gold)">Publish / Tambah Nama</span>
+                </button>
             </div>
         </div>
 
         <div id="all-names-section" class="section">
             <div class="header-actions">
-                <button class="back-btn" onclick="window.switchTab('menu-section')">← Kembali</button>
-                <h2 style="font-size: 1.5rem;">All Identities</h2>
+                <button class="back-btn" onclick="showSection('menu-section')">← Kembali</button>
+                <h2 class="section-title">All Identities</h2>
             </div>
-            <input type="text" id="search-bar" class="search-input" placeholder="🔍 Cari nama..." oninput="window.runSearch()">
+            <input type="text" id="search-bar" class="search-input" placeholder="🔍 Search identity..." oninput="filterNames()">
             <div class="list-container" id="all-names-list"></div>
         </div>
 
         <div id="top-names-section" class="section">
             <div class="header-actions">
-                <button class="back-btn" onclick="window.switchTab('menu-section')">← Kembali</button>
-                <h2 style="font-size: 1.5rem;">Leaderboard</h2>
+                <button class="back-btn" onclick="showSection('menu-section')">← Kembali</button>
+                <h2 class="section-title">Leaderboard</h2>
             </div>
             <div class="list-container" id="top-names-list"></div>
         </div>
 
         <div id="add-name-section" class="section">
             <div class="header-actions">
-                <button class="back-btn" onclick="window.switchTab('menu-section')">← Kembali</button>
-                <h2 style="font-size: 1.5rem;">Submit New</h2>
+                <button class="back-btn" onclick="showSection('menu-section')">← Kembali</button>
+                <h2 class="section-title">Submit New</h2>
             </div>
-            <input type="text" id="new-name" class="search-input" placeholder="Masukkan nama baru...">
-            <button class="btn btn-gold" onclick="window.submitIdentity()">INITIATE PUBLISH PROTOCOL</button>
+            <div style="margin-bottom: 25px;">
+                <label style="display:block; margin-bottom:12px; color:var(--text-muted); font-size:0.9rem; font-weight:600;">NEW IDENTITY NAME:</label>
+                <input type="text" id="new-name" class="search-input" placeholder="Enter custom name...">
+            </div>
+            <button class="btn" style="width: 100%; border-color: var(--gold); color: var(--gold); justify-content: center;" onclick="submitNewName()">
+                INITIATE PUBLISH
+            </button>
             
-            <div id="dashboard" style="display: none;">
-                <p style="text-align:center; color:var(--text-muted); font-size:0.9rem; margin-top:15px;" id="wait-msg">Proses sinkronisasi server...</p>
-                <div class="timer-card">
-                    <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
-                        <span>Antrean Utama</span> <span id="time-publish" style="color:var(--gold)">5:00</span>
+            <div id="process-dashboard" style="display: none; margin-top: 20px;">
+                <div class="waiting-text" id="waiting-msg">Sinkronisasi sedang berjalan...</div>
+                <div class="timer-card" id="card-publish" style="display: block;">
+                    <div class="timer-header">
+                        <span style="color: #fff; font-weight: 600;">Antrean Utama</span>
+                        <span id="time-publish" style="color: var(--gold);">5:00</span>
                     </div>
                     <div class="progress-bar"><div class="progress-fill" id="fill-publish"></div></div>
-                </div>
-                <div class="timer-card">
-                    <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
-                        <span>Leaderboard Sync</span> <span id="time-top" style="color:var(--gold)">10:00</span>
-                    </div>
-                    <div class="progress-bar"><div class="progress-fill" id="fill-top"></div></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script type="module" src="main.js"></script>
+    <script type="module" src="renderer.js"></script>
 </body>
 </html>
