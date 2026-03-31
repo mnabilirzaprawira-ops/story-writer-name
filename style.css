@@ -423,28 +423,34 @@ p.subtitle {
     display: none;
 }
 
-        /* 📱 MOBILE SUPER OPTIMIZATION (ANTI-LAG FIX) */
+        /* 📱 MOBILE SUPER OPTIMIZATION (THE ULTIMATE ANTI-LAG FIX) */
         @media (max-width: 768px) {
             .container {
-                /* Matikan efek kaca buram secara total di HP */
+                /* Matikan efek kaca buram di HP */
                 backdrop-filter: none !important;
                 -webkit-backdrop-filter: none !important;
-                
-                /* Ganti panel dengan warna gelap elegan */
                 background: rgba(15, 15, 23, 0.95) !important; 
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+                border: 1px solid rgba(255, 255, 255, 0.05) !important;
             }
             
-            /* INI DIA BIANG KEROKNYA: Kita matikan animasi .blob di HP */
+            /* 🚫 MATIKAN SVG NOISE TEXTURE (Ini biang kerok utama lag di HP!) */
+            .container::before {
+                display: none !important;
+            }
+
+            /* 🚫 SEMBUNYIKAN CAIRAN BLUR SECARA TOTAL DI HP */
             .blob {
-                /* Kurangi blur secara drastis dari 80px ke 30px */
-                filter: blur(30px) !important;
-                /* HENTIKAN pergerakan cairan 100% di HP */
-                animation: none !important; 
+                display: none !important; 
+            }
+
+            /* Ganti background HP dengan gradasi gelap yang ringan tapi elegan */
+            .bg-liquid {
+                background: linear-gradient(135deg, #0f0c1b 0%, #030305 100%) !important;
             }
 
             .list-container {
-                /* Membantu scroll list agar sangat mulus di sentuhan HP */
+                /* Perhalus scroll momentum di layar sentuh */
                 -webkit-overflow-scrolling: touch;
             }
         }
