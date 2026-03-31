@@ -423,30 +423,28 @@ p.subtitle {
     display: none;
 }
 
-        /* 📱 MOBILE SUPER OPTIMIZATION (ANTI-LAG) */
+        /* 📱 MOBILE SUPER OPTIMIZATION (ANTI-LAG FIX) */
         @media (max-width: 768px) {
             .container {
-                /* Matikan efek kaca buram yang menyiksa GPU HP */
+                /* Matikan efek kaca buram secara total di HP */
                 backdrop-filter: none !important;
                 -webkit-backdrop-filter: none !important;
                 
-                /* Ganti dengan warna background yang lebih gelap/solid tapi tetap elegan */
+                /* Ganti panel dengan warna gelap elegan */
                 background: rgba(15, 15, 23, 0.95) !important; 
-                
-                /* Kurangi bayangan agar scroll lebih ringan */
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
             }
             
-            .glow-sphere {
-                /* Kurangi tingkat blur secara drastis */
-                filter: blur(40px) !important;
-                /* Hentikan pergerakan sphere di HP agar tidak patah-patah saat discroll */
+            /* INI DIA BIANG KEROKNYA: Kita matikan animasi .blob di HP */
+            .blob {
+                /* Kurangi blur secara drastis dari 80px ke 30px */
+                filter: blur(30px) !important;
+                /* HENTIKAN pergerakan cairan 100% di HP */
                 animation: none !important; 
-                opacity: 0.08 !important;
             }
 
             .list-container {
-                /* Membantu scroll list agar di-handle langsung oleh mesin hardware HP */
+                /* Membantu scroll list agar sangat mulus di sentuhan HP */
                 -webkit-overflow-scrolling: touch;
             }
         }
