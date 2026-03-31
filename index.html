@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Name Vault — Liquid Edition | Nabil Irza Prawira</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-liquid">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div id="toast">Message goes here</div>
+
+    <div class="container">
+        
+        <div id="menu-section" class="section active">
+            <h1>The Name Vault</h1>
+            
+            <div class="profile-section">
+                <div class="profile-title">System Architecture & Lore</div>
+                <p class="subtitle">
+                    Welcome to the central archive of pure, authentic, and high-aesthetic names. Every single identity listed here is a unique creation, handcrafted with deep thought and original concepts.
+                    <br><br>
+                    <strong>Ecosystem Rule:</strong> To maintain a prestigious and non-flooded environment, the submission algorithm requires a strict processing delay. Quality over quantity.
+                </p>
+                <div class="author-info">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Curator: <span style="color: #fff; font-weight:800">Nabil Irza Prawira</span></p>
+                    <a id="secret-trigger" class="instagram-link" onclick="handleSecretClick(event)">@n4bilirzap.ip</a>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn" onclick="showSection('all-names-section'); renderAllNames();">
+                    <span>Daftar Semua Nama</span>
+                </button>
+                <button class="btn" onclick="showSection('top-names-section'); renderTopNames();">
+                    <span>Top Nama Terbaik</span>
+                </button>
+                <button class="btn" style="border-color: rgba(255, 189, 89, 0.3);" onclick="showSection('add-name-section')">
+                    <span style="color: var(--gold)">Publish / Tambah Nama</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="all-names-section" class="section">
+            <div class="header-actions">
+                <button class="back-btn" onclick="showSection('menu-section')">← Kembali</button>
+                <h2 class="section-title">All Identities</h2>
+            </div>
+            
+            <input type="text" id="search-bar" class="search-input" placeholder="🔍 Search a unique identity..." oninput="filterNames()">
+            <div class="list-container" id="all-names-list"></div>
+        </div>
+
+        <div id="top-names-section" class="section">
+            <div class="header-actions">
+                <button class="back-btn" onclick="showSection('menu-section')">← Kembali</button>
+                <h2 class="section-title">Leaderboard</h2>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Ranked by community appreciation protocols.</p>
+            <div class="list-container" id="top-names-list"></div>
+        </div>
+
+        <div id="add-name-section" class="section">
+            <div class="header-actions">
+                <button class="back-btn" onclick="showSection('menu-section')">← Kembali</button>
+                <h2 class="section-title">Submit New</h2>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <label style="display:block; margin-bottom:12px; color:var(--text-muted); font-size:0.9rem; font-weight:600; letter-spacing: 1px;">NEW IDENTITY NAME:</label>
+                <input type="text" id="new-name" class="search-input" placeholder="Enter custom name...">
+            </div>
+            
+            <button class="btn" style="width: 100%; border-color: var(--gold); color: var(--gold); justify-content: center;" onclick="submitNewName()">
+                INITIATE PUBLISH PROTOCOL
+            </button>
+            
+            <div id="process-dashboard" style="display: none; margin-top: 20px;">
+                <div class="waiting-text" id="waiting-msg">
+                    Identitas masuk ke daftar tunggu. Sinkronisasi sedang berjalan...
+                </div>
+
+                <div class="timer-card" id="card-publish" style="display: block;">
+                    <div class="timer-header">
+                        <span style="color: #fff; font-weight: 600;">Protokol Antrean Utama</span>
+                        <span id="time-publish" style="color: var(--gold);">5:00</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="fill-publish"></div></div>
+                </div>
+
+                <div class="timer-card" id="card-top" style="display: block;">
+                    <div class="timer-header">
+                        <span style="color: #fff; font-weight: 600;">Sinkronisasi Papan Peringkat</span>
+                        <span id="time-top" style="color: var(--gold);">10:00</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="fill-top"></div></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+   <script type="module" src="script.js"></script>
+</body>
+</html>
