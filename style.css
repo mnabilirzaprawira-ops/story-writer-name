@@ -423,22 +423,30 @@ p.subtitle {
     display: none;
 }
 
-/* 📱 MOBILE OPTIMIZATION (THE MAGIC FIX) */
-@media (max-width: 768px) {
-    .container {
-        /* Mengurangi beban blur kaca di HP dari 40px ke 20px */
-        backdrop-filter: blur(20px) saturate(150%);
-        -webkit-backdrop-filter: blur(20px) saturate(150%);
-        padding: 30px 20px; 
-    }
-    .blob {
-        /* Mengurangi efek kabur cairan belakang dari 80px ke 50px */
-        filter: blur(50px);
-    }
-    h1 {
-        font-size: 2.2rem;
-    }
-    .name-item {
-        padding: 15px;
-    }
-}
+        /* 📱 MOBILE SUPER OPTIMIZATION (ANTI-LAG) */
+        @media (max-width: 768px) {
+            .container {
+                /* Matikan efek kaca buram yang menyiksa GPU HP */
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                
+                /* Ganti dengan warna background yang lebih gelap/solid tapi tetap elegan */
+                background: rgba(15, 15, 23, 0.95) !important; 
+                
+                /* Kurangi bayangan agar scroll lebih ringan */
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+            }
+            
+            .glow-sphere {
+                /* Kurangi tingkat blur secara drastis */
+                filter: blur(40px) !important;
+                /* Hentikan pergerakan sphere di HP agar tidak patah-patah saat discroll */
+                animation: none !important; 
+                opacity: 0.08 !important;
+            }
+
+            .list-container {
+                /* Membantu scroll list agar di-handle langsung oleh mesin hardware HP */
+                -webkit-overflow-scrolling: touch;
+            }
+        }
