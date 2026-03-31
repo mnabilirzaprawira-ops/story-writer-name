@@ -29,9 +29,10 @@ body {
     padding: 40px 20px;
     overflow-x: hidden;
     position: relative;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* 💧 Liquid Background Animation */
+/* 💧 Liquid Background Animation (OPTIMIZED FOR MOBILE) */
 .bg-liquid {
     position: fixed;
     width: 100vw;
@@ -42,6 +43,8 @@ body {
     overflow: hidden;
     pointer-events: none;
     background: radial-gradient(circle at center, #0a0a12 0%, #030305 100%);
+    /* Force Hardware Acceleration */
+    transform: translateZ(0); 
 }
 
 .blob {
@@ -49,6 +52,10 @@ body {
     filter: blur(80px);
     opacity: 0.5;
     animation: morph 12s ease-in-out infinite, moveBlob 20s infinite alternate;
+    /* Memberitahu browser bagian mana yang akan bergerak agar GPU siap-siap */
+    will-change: transform, border-radius; 
+    transform: translateZ(0); 
+    backface-visibility: hidden;
 }
 
 .blob-1 {
@@ -75,7 +82,7 @@ body {
     100% { transform: translate(150px, 100px) scale(1.2) rotate(45deg); }
 }
 
-/* 🧊 Liquid Glass Container */
+/* 🧊 Liquid Glass Container (OPTIMIZED) */
 .container {
     width: 100%;
     max-width: 720px;
@@ -91,9 +98,9 @@ body {
     z-index: 1;
     position: relative;
     overflow: hidden;
+    transform: translateZ(0); /* Hardware Acceleration */
 }
 
-/* Subtle noise texture for realism */
 .container::before {
     content: "";
     position: absolute;
@@ -178,7 +185,7 @@ p.subtitle {
     border-radius: 12px;
     transition: all 0.3s ease;
     cursor: pointer;
-    user-select: none; /* Prevents text selection on multi-click */
+    user-select: none; 
 }
 
 .instagram-link:hover {
@@ -298,6 +305,7 @@ p.subtitle {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    overscroll-behavior: contain; /* Memperhalus scroll di HP */
 }
 
 .list-container::-webkit-scrollbar { width: 6px; }
@@ -315,6 +323,7 @@ p.subtitle {
     align-items: center;
     transition: all 0.3s ease;
     animation: fadeInItem 0.5s ease backwards;
+    transform: translateZ(0); /* Hardware Acceleration pada list */
 }
 
 @keyframes fadeInItem {
@@ -412,4 +421,24 @@ p.subtitle {
     margin-bottom: 15px;
     font-style: italic;
     display: none;
+}
+
+/* 📱 MOBILE OPTIMIZATION (THE MAGIC FIX) */
+@media (max-width: 768px) {
+    .container {
+        /* Mengurangi beban blur kaca di HP dari 40px ke 20px */
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        padding: 30px 20px; 
+    }
+    .blob {
+        /* Mengurangi efek kabur cairan belakang dari 80px ke 50px */
+        filter: blur(50px);
+    }
+    h1 {
+        font-size: 2.2rem;
+    }
+    .name-item {
+        padding: 15px;
+    }
 }
